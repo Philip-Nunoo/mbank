@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Map</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write(unescape('%3Cscript src="//jquery.com/jquery-wp-content/themes/jquery/js/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+	<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+	
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+	<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
+
+	<!-- Foundateion css -not nessary -->
+	<link rel="stylesheet" type="text/css" href="assets/css/foundation.min.css">
+	<link rel="stylesheet" href="assets/css/fontello/css/fontello.css">
+    <link rel="stylesheet" href="assets/css/fontello/css/animation.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/body.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/map.css">
+
+	<!-- Magic suggest -->
+	<link rel="stylesheet" type="text/css" href="assets/magicsuggest/magicsuggest-min.css">
+	<script type="text/javascript" src="assets/magicsuggest/magicsuggest-min.js"></script>
+	
+</head>
+<body>
+<style>
+div#nav{
+	transition: opacity 20s linear;
+}
+.mgsuggest{
+	position: absolute;
+	z-index: 99;
+	width: 294px;
+	top: 20px;
+	left: 100px;
+	background-color: rgba(255,255,255,0.93);
+	padding: 0px;
+	border: 1px solid #DDD;
+}
+
+.mgsuggest input{
+	background-color: transparent;
+}
+/*"[{\"id\":\"3\",\"name\":\"New Test\",\"amount\":\"266805.00\",\"longitude\":\"77.34\",\"latitude\":\"93.56\"},{\"id\":\"2\",\"name\":\"Test User\",\"amount\":\"136224.00\",\"longitude\":\"5.69797781\",\"latitude\":\"-0.1769147\"}]"*/
+</style>
+	<!-- <input type="text" id="mgsuggest">
+<script type="text/javascript">
+$(function() {
+    
+});
+</script>
+ -->
+	<div id="loading" class="spinner"></div>
+	<div id="map"></div>
+	<div id="nav">
+		<div style="text-align: center;">
+			<h2 style="font-size: 1.2em;">Bank Merchant View</h2>
+		</div>
+		<div class="field">
+			<h4>Selected Bank</h4>
+			<select disabled="disabled" id="joy1">
+				<option>Unibank</option>
+			</select>
+		</div>
+		<div class="field">
+		<i class="icon-info has-tip" style="font-size: 10px;color: #FFF;display: inline-block;background-color: #000;border-radius: 13px;text-align: center;height: 18px;width: 18px; padding: 3px 0px 0px 0px;" data-tooltip title="set date to 2014-06-25 to get test data values!" ></i><h4 style="display: inline-block; margin-left: 5px;">Choose Teller Name:</h4>
+			
+			<select id="tellers">
+				<option selected="selected" value="-1">Choose Teller</option>
+				<option value="-1">All</option>
+				<option value="2">Test Teller 1</option>
+				<option value="3">Test Teller 2</option>
+			</select><br/>
+			<input type="date" placeholder="Search for teller" id="teller_trans_date" name="date"><br/>
+			
+			<!-- <input href="#" data-reveal-id="tellerTotalDate" type="button" value="Get total amount for a day" class="button tiny secondary"> -->
+		</div>
+		<!--
+		<div>
+			<button onclick="search()" class="tiny">Go</button>
+		</div> -->
+		<div class="field">
+			<input id="switch" type="checkbox"><label for="switch">Switch watch</label><br/>
+			<fieldset>
+				<legend>Dates:</legend>
+				<input id="today" type="radio" name="date"><label for="today">Today</label><br/>
+				<input id="yesterday" type="radio" name="date"><label for="yesterday">Yesterday</label><br/>
+				<input id="lastWeek" type="radio" name="date"><label for="lastWeek">LastWeek</label><br/>
+				Choose Date<br/>
+				From: <input type="date" id="date" >
+				To: <input type="date" id="date" >
+			</fieldset>
+		</div>
+	</div>
+	<div id="set">
+		<a class="menu menu1 has-tip tip-right" onclick="set_menu(0);" data-tooltip title="Toggle Fullscreen" ><i class="icon-location" ></i></a>
+		<a class="menu menu2" onclick="set_menu(1);"><i class="icon-space-shuttle"></i></a>
+		<a class="menu menu3" onclick="set_menu(2);"></a>
+		<a class="menu menu4 has-tip tip-right" onclick="set_menu(3);" data-tooltip title="Info"><i class="icon-info" ></i></a>
+	</div>
+	<div id="info"></div>
+<!-- All modal designs -->
+<!-- tellerTotalDate -->
+<div id="tellerTotalDate" class="reveal-modal tiny" data-reveal>
+  <h2>Enter Date.</h2>
+  <p>Select Date to find tellers total amount on the said date.</p>
+  <p><input type="date" id="tellerTotalDATE"></p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<!-- Info message -->
+<div id="appInfo" class="reveal-modal tiny" data-reveal>
+  <div>
+  <i class="icon-info" style="font-size: 30px; display:block; text-align: center;"></i>
+  The maps integrates into your existing...
+  </div>
+</div>
+<!-- End of modal designs -->
+
+<!-- Joyride -->
+<!-- At the bottom of your page but inside of the body tag -->
+<ol class="joyride-list" data-joyride>
+  <li data-id="joy1" class="joyride-css" data-text="Next" data-options="tip_location: top; prev_button: false">
+    <p>Bank name set to default from login page.</p>
+  </li>
+  <li data-id="tellers" class="joyride-css" data-text="Next" data-options="prev_button: true;" data-prev-text="Prev" >
+    <h4>Choosing a Teller</h4>
+    <p>Use this control to display all transactions of a particular teller.</p>
+  </li>
+  <li data-id="teller_trans_date" class="joyride-css" data-button="Next" data-prev-text="Prev" data-options="tip_location:top;tip_animation:pop">
+    <p>Select a date to search for teller transaction.</p>
+  </li>
+  <li data-class="menu1" class="joyride-css" data-button="Next" data-prev-text="Prev">
+    <p>Click here to show map in full screen.</p>
+  </li>
+  <li data-button="End" class="joyride-css" data-prev-text="Prev">
+    <p>Other features to be added on searching on a particular date and between dates!</p>
+  </li>
+</ol>
+</body>
+<script src="assets/js/foundation.js"></script>
+<script src="assets/js/modernizr.js"></script>
+<script src="assets/js/foundation.alert.js"></script>
+<script src="assets/js/foundation.reveal.js"></script>
+<script src="assets/js/foundation.joyride.js"></script>
+<script src="assets/js/foundation.tooltip.js"></script>
+<script>
+	$(document).foundation();
+	$(document).foundation({
+		  tooltip: {
+		    selector : '.has-tip',
+		    additional_inheritable_classes : [],
+		    tooltip_class : '.tooltip'
+		}
+	});
+</script>
+<script type="text/javascript" src="assets/js/map.js"></script>
+</html>

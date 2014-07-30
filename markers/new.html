@@ -1,0 +1,22 @@
+<form method="post" action="../functions.php?request=createMarkers" onsubmit="validate();">
+	<div>
+		<label for="longitude">Longitude</label><br/>
+		<input type="text" value="123.13" name="longitude" required>
+	</div>
+	<div>
+		<label for="latitude">Latitude</label><br/>
+		<input type="text" value="11.13413" name="latitude" required>
+	</div>
+	<div>
+		<label for="description">Description</label><br/>
+		<textarea name="description"></textarea>
+	</div>
+	<div>
+		<input type="submit">
+	</div>
+</form>
+<script type="text/javascript">
+function valid () {
+	return true;
+}
+</script>

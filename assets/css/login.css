@@ -1,0 +1,16 @@
+/* Welcome to Compass. Use this file to define print styles.
+ * Import this file using the following HTML or equivalent:
+ * <link href="/assets/css/login.css" media="print" rel="stylesheet" type="text/css" /> 
+ */
+/* line 6, ../sass/sass/login.sass */
+div#margin {
+  width: 17%;
+  padding: 10px;
+  margin: auto;
+  padding-top: 18%;
+}
+/* line 12, ../sass/sass/login.sass */
+div#margin h4 {
+  font-size: 16px;
+  color: #777777;
+}

@@ -1,0 +1,213 @@
+div#nav 
+	width: 16%
+	height: 100%
+	position: fixed
+	left: 0px
+	z-index: 99
+	background-color: #FFF
+	padding: 12px
+	background-color: #EEE
+	transition: all 2s linear
+	display: block
+	visibility: hidden
+	visibility: visible
+	transition: visibility 10.2s linear
+
+	div.field 
+		box-shadow: 0px 0px 1px
+		border-radius: 5px
+		padding: 10px 3px
+		margin-bottom: 17px
+		background-color: #FFF
+		padding-bottom: 8px
+		padding-left: 12px
+		padding-right: 12px
+
+		h4 
+			margin: 0px
+			margin-bottom: 6px
+			font-weight: lighter
+			font-size: 14px
+
+
+		input[type="text"]
+			padding: 9px 12px
+			width: 87%
+			margin-top: -5px
+
+
+		button 
+			padding: 12px
+
+#set 
+	position: fixed
+	background-color: #333
+	height: 100%
+	color: #FFF
+	left: 0px
+	z-index: 99
+	left: 16%
+	transition: left 0.14s linear
+
+	.menu1
+		&:hover
+			color: #000
+
+	a.menu 
+		background-color: #DDD
+		padding: 0px
+		margin: 5px
+		height: 40px
+		width: 40px
+		border-radius: 7px
+		text-align: center
+		font-size: 23px
+		color: #000
+		display: block
+
+		i 
+			display: block
+			padding: 8px 0px
+	
+
+		&:hover
+			color: #00F
+
+div#info 
+	width: 18%
+	min-height: 20px
+	background-color: rgba(255,255,255,0.93)
+	color: #444
+	z-index: 99
+	border-radius: 8px
+	position: fixed
+	right: 50px
+	top: 40px
+	max-height: 87%
+	overflow: auto
+	padding: 10px
+	border: 1px solid #BBB
+	border-top: 6px solid #000
+	font-size: 12px
+	display: none
+	-webkit-transition: width 2s 
+	transition: width 2s
+	max-height: 88%
+	overflow: auto
+	display: block
+	background-color: rgba(255, 255, 255, 0.23)
+	
+	table.user
+		width: 100%
+		border: none
+		background-color: rgba(255,255,255,0.94)
+		border-radius: 5px
+
+		tr
+			background-color: transparent
+		th
+			text-align: left
+			width: 26%
+
+		td
+			text-align: left
+
+			.icon
+				font-style: italic
+				font-weight: 100
+				margin-bottom: 9px
+				border-right: 4px solid
+
+				span
+					display: inline-block
+					width: 10px
+					height: 10px
+					background-color: #0044FF
+					border-radius: 10px
+					margin: 0px 7px
+
+div#map 
+	right: 0
+	width: 97%
+	height: 100%
+	position: absolute
+	width: 81.02%
+	transition: width 0.14s linear
+
+#loading
+	position: absolute
+	z-index: 99
+	top: 50%
+	left: 50%
+	display: none
+	background-color: rgba(0, 0, 0, 0.56)
+
+
+.hidden
+	display: none
+
+.visuallyhidden
+	opacity: 0
+
+.noLeft
+	left: 0
+
+.navSetLeft
+	left: 16.5%
+
+.field
+	fieldset
+		border-radius: 4px
+		padding: 8px 10px
+
+		legend
+			font-size: 17px
+			text-transform: capitalize
+			font-weight: normal
+
+div.alltellers
+	ul
+		padding: 0px
+		margin: 0px
+
+		li
+			list-style-type: none
+			border-bottom: 1px solid #AAA
+			margin-bottom: 10px
+			border-top: 5px solid #AAA
+			padding: 3px 8px
+			border-radius: 4px
+			box-shadow: 0px 0px 1px
+			background-color: rgba(255,255,255, 0.8)
+
+			&:hover
+				cursor: pointer
+				background-color: rgba(250, 250, 250, 0.96)
+
+			div.tellerName
+				font-weight: bold
+
+			div.amount
+				font-weight: lighter
+
+.joyride-css
+	background-color: rgba(0,0, 0, 0.8)
+	border-radius: 5px
+	border: 2px solid #333
+	border-bottom: 4px solid #0C0
+
+	p
+		font-size: 11px
+
+	.button
+		font-size: 11px
+		padding: 9px 20px
+		border-radius: 3px
+
+.tooltip
+	font-size: 12px
+	padding: 8px 11px
+	position: absolute
+	z-index: 9999
+	border-radius: 4px
+	border-bottom: 4px solid #0C0
